@@ -1,0 +1,12 @@
+---
+- name: Install WordPress, MySQL, Nginx, and PHP
+  hosts: test
+  remote_user: root
+  sudo: yes
+
+  roles:
+    - initial
+    - nginx
+    - mysql
+    - php
+    - wordpress

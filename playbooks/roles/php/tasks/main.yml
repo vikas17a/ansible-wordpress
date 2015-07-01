@@ -1,0 +1,14 @@
+---
+- name : Install PHP
+  yum: pkg={{ item }} state=present
+  with_items:
+    - php-fpm
+    - php-mysql
+
+- name : Configure php-fpm
+  template: src=php.ini dest=/etc/
+  notify: start php-fpm
+
+- name : Configure php-fpm www.conf
+  template: src=www.conf dest=/etc/php-fpm.d/
+  notify: restart php-fpm

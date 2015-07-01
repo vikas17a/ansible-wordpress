@@ -1,0 +1,11 @@
+---
+- name: Installing Mysql package
+  yum: name={{ item }} state=present
+  with_items:
+   - mysql-server
+   - MySQL-python
+   - libselinux-python
+   - libsemanage-python
+
+- name: Start Mysql
+  service: name=mysqld state=started enabled=yes

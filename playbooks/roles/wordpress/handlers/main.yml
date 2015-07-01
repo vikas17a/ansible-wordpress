@@ -1,0 +1,7 @@
+---
+- name: restart mysql
+  service: name=mysqld state=restarted
+- name: restart nginx
+  service: name=nginx state=restarted
+- name: start php-fpm
+  service: name=php-fpm state=started

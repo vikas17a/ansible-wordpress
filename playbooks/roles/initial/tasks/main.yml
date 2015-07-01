@@ -1,0 +1,6 @@
+---
+#- name: Update yum
+#  yum: name=* state=latest
+
+- name: Install libselinux-python
+  yum: name=libselinux-python state=present

@@ -1,0 +1,10 @@
+---
+- name: Installs nginx web server
+  yum: pkg=nginx state=present
+
+- name: Start Nginx
+  service: name=nginx state=started enabled=yes
+
+- name: Copy nginx configuration for wordpress
+  template: src=default.conf dest=/etc/nginx/conf.d/default.conf
+  notify: restart nginx

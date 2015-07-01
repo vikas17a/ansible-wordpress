@@ -1,0 +1,25 @@
+---
+- name: Download WordPress
+  get_url: url=http://wordpress.org/latest.tar.gz dest=/home/{{ ansible_ssh_user }}/
+
+- name: Extract WordPress
+  command: chdir=/home/{{ ansible_ssh_user }}/ /bin/tar xzvf latest.tar.gz creates=/home/{{ansible_ssh_user}}/wordpress
+
+- name: Create WordPress database
+  mysql_db: name={{ database }} state=present
+
+- name: Create WordPress database user
+  mysql_user: name={{ db_user }} password={{ db_password }} priv={{ database }}.*:ALL host='localhost' state=present
+
+- name: Setting up configuration for wordpress
+  template: src=wp-config.php dest=/home/{{ ansible_ssh_user }}/wordpress/
+
+- name: Creating new directory
+  command: mkdir -p /var/www/
+
+- name: Move wordpress to required location
+  command: /bin/cp -r /home/{{ ansible_ssh_user }}/wordpress/ /var/www/
+  notify:
+    - restart mysql
+    - restart nginx
+    - start php-fpm
