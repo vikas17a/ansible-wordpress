@@ -1,6 +1,8 @@
 ---
 - name: start php-fpm
+  sudo: yes
   service: name=php-fpm state=started
   
 - name: restart php-fpm
+  sudo: yes
   service: name=php-fpm state=restarted
